@@ -399,11 +399,9 @@ div[data-testid="stImage"] img { border-radius: 10px; }
 st.markdown("""
 <div class="hero">
   <div style="margin-bottom:1rem">
-    <span class="badge">AI4009</span>
-    <span class="badge">Spring 2026</span>
-    <span class="badge">FAST-NUCES</span>
+    <span class="badge">Generative AI</span>
   </div>
-  <h1>🧠 DDPM Face Generator</h1>
+  <h1>DDPM Face Generator</h1>
   <p>Denoising Diffusion Probabilistic Model — trained from scratch on CelebA-HQ &nbsp;·&nbsp; Pure PyTorch</p>
 </div>
 """, unsafe_allow_html=True)
@@ -426,14 +424,14 @@ fd, net, ckpt_loaded = load_model()
 
 if not ckpt_loaded:
     st.warning(
-        "⚠️  No checkpoint found at `ddpm_best.pt`. "
+        " No checkpoint found at `ddpm_best.pt`. "
         "Download it from your Kaggle output and place it in the same folder as this file. "
         "The app will still run but will produce random (untrained) outputs.",
         icon="⚠️"
     )
 
 # ── TABS ──────────────────────────────────────────────────────────────────────
-tab1, tab2 = st.tabs(["✨  Generate New Faces", "🔁  Reconstruct an Image"])
+tab1, tab2 = st.tabs(["Generate New Faces", " Reconstruct an Image"])
 
 # ── TAB 1: GENERATE ────────────────────────────────────────────────────────
 with tab1:
@@ -443,7 +441,7 @@ with tab1:
         n_gen   = st.slider("Number of images", 1, 4, 1)
         n_vis   = st.slider("Visualisation steps", 4, 12, 8)
         st.markdown("<br>", unsafe_allow_html=True)
-        gen_btn = st.button("🎲 Generate", use_container_width=True, type="primary")
+        gen_btn = st.button(" Generate", use_container_width=True, type="primary")
 
     with col_b:
         st.info("Click **Generate** to run reverse diffusion from pure Gaussian noise. "
@@ -462,7 +460,7 @@ with tab1:
             st.image(tensor_to_pil(final), use_container_width=True)
         buf = io.BytesIO()
         tensor_to_pil(final).save(buf, format="PNG")
-        st.download_button("⬇️ Download Image", buf.getvalue(), "generated_face.png", "image/png")
+        st.download_button(" Download Image", buf.getvalue(), "generated_face.png", "image/png")
 
 # ── TAB 2: RECONSTRUCT ─────────────────────────────────────────────────────
 with tab2:
@@ -492,16 +490,16 @@ with tab2:
             transforms.Normalize([0.5]*3, [0.5]*3),
         ])
         img_tensor = transform(raw_img)
-        rec_btn = st.button("🔁 Reconstruct", use_container_width=True, type="primary")
+        rec_btn = st.button(" Reconstruct", use_container_width=True, type="primary")
 
         if rec_btn:
             recon, x_T, frames = reconstruct_image(fd, net, img_tensor, noise_level, n_vis_r)
 
             st.markdown('<p class="section-label">Side-by-Side Comparison</p>', unsafe_allow_html=True)
             ca, cb, cc = st.columns(3)
-            ca.image(tensor_to_pil(img_tensor), caption="🟢 Target (original)", use_container_width=True)
-            cb.image(tensor_to_pil(x_T),        caption=f"🔴 Noised (t={int(cfg.T*noise_level)})", use_container_width=True)
-            cc.image(tensor_to_pil(recon),       caption="🔵 Reconstructed",    use_container_width=True)
+            ca.image(tensor_to_pil(img_tensor), caption=" Target (original)", use_container_width=True)
+            cb.image(tensor_to_pil(x_T),        caption=f" Noised (t={int(cfg.T*noise_level)})", use_container_width=True)
+            cc.image(tensor_to_pil(recon),       caption=" Reconstructed",    use_container_width=True)
 
             st.markdown('<p class="section-label">Denoising Steps</p>', unsafe_allow_html=True)
             step_cols = st.columns(len(frames))
@@ -525,15 +523,15 @@ with tab2:
 
             buf2 = io.BytesIO()
             tensor_to_pil(recon).save(buf2, format="PNG")
-            st.download_button("⬇️ Download Reconstruction", buf2.getvalue(), "reconstructed.png", "image/png")
+            st.download_button(" Download Reconstruction", buf2.getvalue(), "reconstructed.png", "image/png")
     else:
-        st.markdown("👆 Upload an image above to get started.")
+        st.markdown("Upload an image above to get started.")
 
 # ── SIDEBAR ───────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("### 🧠 Model Info")
+    st.markdown("###  Model Info")
     st.markdown(f"**Device:** `{DEVICE}`")
-    st.markdown(f"**Checkpoint:** {'✅ Loaded' if ckpt_loaded else '❌ Not found'}")
+    st.markdown(f"**Checkpoint:** {'Loaded' if ckpt_loaded else ' Not found'}")
     st.markdown("---")
     st.markdown("**Architecture**")
     st.markdown(f"- Image size: `{cfg.IMAGE_SIZE}×{cfg.IMAGE_SIZE}`")
@@ -542,6 +540,6 @@ with st.sidebar:
     st.markdown(f"- Base channels: `{cfg.BASE_CH}`")
     st.markdown(f"- Attention res: `{cfg.ATTN_RES}`")
     st.markdown("---")
-    st.markdown("**Assignment 4 · AI4009**")
-    st.markdown("Generative AI · Spring 2026")
-    st.markdown("FAST-NUCES")
+    st.markdown("**DDPM**")
+    st.markdown("GenAI")
+    st.markdown("Mehar Akbar")
