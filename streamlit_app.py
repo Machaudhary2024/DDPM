@@ -37,7 +37,7 @@ class Config:
     NUM_RES    = 2
     ATTN_RES   = (16,)
     DROPOUT    = 0.1
-    CKPT_PATH  = "C:\\ddpm_best.pt"   # put your checkpoint file here
+    CKPT_PATH  = "C:/Downloads/ddpm_best.pt"   # put your checkpoint file here
 
 cfg = Config()
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
